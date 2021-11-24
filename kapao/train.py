@@ -18,24 +18,21 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.optim import Adam, SGD, lr_scheduler
 from tqdm import tqdm
 
-FILE = Path(__file__).absolute()
-sys.path.append(FILE.parents[0].as_posix())  # add yolov5/ to path
-
-import val
-from models.yolo import Model
-from utils.autoanchor import check_anchors
-from utils.datasets import create_dataloader
-from utils.general import labels_to_class_weights, increment_path, labels_to_image_weights, init_seeds, \
+import kapao.val
+from kapao.models.yolo import Model
+from kapao.utils.autoanchor import check_anchors
+from kapao.utils.datasets import create_dataloader
+from kapao.utils.general import labels_to_class_weights, increment_path, labels_to_image_weights, init_seeds, \
     strip_optimizer, get_latest_run, check_dataset, check_file, check_img_size, \
     print_mutation, set_logging, one_cycle, colorstr, methods
-from utils.downloads import attempt_download
-from utils.loss import ComputeLoss
-from utils.plots import plot_labels, plot_evolve
-from utils.torch_utils import EarlyStopping, ModelEMA, de_parallel, intersect_dicts, select_device, \
+from kapao.utils.downloads import attempt_download
+from kapao.utils.loss import ComputeLoss
+from kapao.utils.plots import plot_labels, plot_evolve
+from kapao.utils.torch_utils import EarlyStopping, ModelEMA, de_parallel, intersect_dicts, select_device, \
     torch_distributed_zero_first
-from utils.metrics import fitness
-from utils.loggers import Loggers
-from utils.callbacks import Callbacks
+from kapao.utils.metrics import fitness
+from kapao.utils.loggers import Loggers
+from kapao.utils.callbacks import Callbacks
 
 LOGGER = logging.getLogger(__name__)
 LOCAL_RANK = int(os.getenv('LOCAL_RANK', -1))  # https://pytorch.org/docs/stable/elastic/run.html
@@ -349,7 +346,7 @@ def train(hyp,  # path/to/hyp.yaml or hyp dictionary
             ema.update_attr(model, include=['yaml', 'nc', 'hyp', 'names', 'stride', 'class_weights'])
             final_epoch = (epoch + 1 == epochs) or stopper.possible_stop
             if not noval or final_epoch:  # Calculate mAP
-                results, maps, _ = val.run(data_dict,
+                results, maps, _ = kapao.val.run(data_dict,
                                            batch_size=batch_size // WORLD_SIZE,
                                            imgsz=imgsz,
                                            conf_thres=0.01,

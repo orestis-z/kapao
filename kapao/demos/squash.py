@@ -1,22 +1,19 @@
-import sys
-from pathlib import Path
-FILE = Path(__file__).absolute()
-sys.path.append(FILE.parents[1].as_posix())  # add kapao/ to path
-
 import argparse
-from pytube import YouTube
 import os.path as osp
-from utils.torch_utils import select_device, time_sync
-from utils.general import check_img_size
-from utils.datasets import LoadImages
-from models.experimental import attempt_load
+
 import torch
 import cv2
 import numpy as np
 import yaml
 from tqdm import tqdm
 import imageio
-from val import run_nms, post_process_batch
+from pytube import YouTube
+
+from kapao.utils.torch_utils import select_device, time_sync
+from kapao.utils.general import check_img_size
+from kapao.utils.datasets import LoadImages
+from kapao.models.experimental import attempt_load
+from kapao.val import run_nms, post_process_batch
 
 
 VIDEO_NAME = 'Squash MegaRally 176 ReDux - Slow Mo Edition.mp4'

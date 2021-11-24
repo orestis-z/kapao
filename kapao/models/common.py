@@ -17,11 +17,11 @@ import torch.nn as nn
 from PIL import Image
 from torch.cuda import amp
 
-from utils.datasets import exif_transpose, letterbox
-from utils.general import colorstr, increment_path, is_ascii, make_divisible, non_max_suppression, save_one_box, \
+from kapao.utils.datasets import exif_transpose, letterbox
+from kapao.utils.general import colorstr, increment_path, is_ascii, make_divisible, non_max_suppression, save_one_box, \
     scale_coords, xyxy2xywh
-from utils.plots import Annotator, colors
-from utils.torch_utils import time_sync
+from kapao.utils.plots import Annotator, colors
+from kapao.utils.torch_utils import time_sync
 
 LOGGER = logging.getLogger(__name__)
 

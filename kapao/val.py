@@ -1,24 +1,20 @@
 import argparse
 import json
 import os, os.path as osp
-import sys
 from pathlib import Path
+import tempfile
 
 import numpy as np
 import torch
 from tqdm import tqdm
-
-FILE = Path(__file__).absolute()
-sys.path.append(FILE.parents[0].as_posix())  # add kapao/ to path
-
-from models.experimental import attempt_load
-from utils.datasets import create_dataloader
-from utils.augmentations import letterbox
-from utils.general import check_dataset, check_file, check_img_size, \
-    non_max_suppression_kp, scale_coords, set_logging, colorstr
-from utils.torch_utils import select_device, time_sync
-import tempfile
 import cv2
+
+from kapao.models.experimental import attempt_load
+from kapao.utils.datasets import create_dataloader
+from kapao.utils.augmentations import letterbox
+from kapao.utils.general import check_dataset, check_file, check_img_size, \
+    non_max_suppression_kp, scale_coords, set_logging, colorstr
+from kapao.utils.torch_utils import select_device, time_sync
 
 PAD_COLOR = (114 / 255, 114 / 255, 114 / 255)
 

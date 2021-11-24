@@ -2,19 +2,15 @@
 
 import logging
 import os
-import sys
 from contextlib import contextmanager
 from pathlib import Path
 
 import yaml
 from tqdm import tqdm
 
-FILE = Path(__file__).absolute()
-sys.path.append(FILE.parents[3].as_posix())  # add yolov5/ to path
-
-from utils.datasets import LoadImagesAndLabels
-from utils.datasets import img2label_paths
-from utils.general import check_dataset, check_file
+from kapao.utils.datasets import LoadImagesAndLabels
+from kapao.utils.datasets import img2label_paths
+from kapao.utils.general import check_dataset, check_file
 
 try:
     import wandb
@@ -121,7 +117,7 @@ class WandbLogger():
         arguments:
         opt (namespace) -- Commandline arguments for this run
         run_id (str) -- Run ID of W&B run to be resumed
-        job_type (str) -- To set the job_type for this run 
+        job_type (str) -- To set the job_type for this run
 
        """
         # Pre-training routine --
@@ -206,7 +202,7 @@ class WandbLogger():
         Setup the necessary processes for training YOLO models:
           - Attempt to download model checkpoint and dataset artifacts if opt.resume stats with WANDB_ARTIFACT_PREFIX
           - Update data_dict, to contain info of previous run if resumed and the paths of dataset artifact if downloaded
-          - Setup log_dict, initialize bbox_interval 
+          - Setup log_dict, initialize bbox_interval
 
         arguments:
         opt (namespace) -- commandline arguments for this run
@@ -295,7 +291,7 @@ class WandbLogger():
         path (Path)   -- Path of directory containing the checkpoints
         opt (namespace) -- Command line arguments for this run
         epoch (int)  -- Current epoch number
-        fitness_score (float) -- fitness score for current epoch 
+        fitness_score (float) -- fitness score for current epoch
         best_model (boolean) -- Boolean representing if the current checkpoint is the best yet.
         """
         model_artifact = wandb.Artifact('run_' + wandb.run.id + '_model', type='model', metadata={
@@ -319,7 +315,7 @@ class WandbLogger():
         data_file (str) -- the .yaml file with information about the dataset like - path, classes etc.
         single_class (boolean)  -- train multi-class data as single-class
         project (str) -- project name. Used to construct the artifact path
-        overwrite_config (boolean) -- overwrites the data.yaml file if set to true otherwise creates a new 
+        overwrite_config (boolean) -- overwrites the data.yaml file if set to true otherwise creates a new
         file with _wandb postfix. Eg -> data_wandb.yaml
 
         returns:
@@ -413,7 +409,7 @@ class WandbLogger():
 
         arguments:
         predn (list): list of predictions in the native space in the format - [xmin, ymin, xmax, ymax, confidence, class]
-        path (str): local path of the current evaluation image 
+        path (str): local path of the current evaluation image
         names (dict(int, str)): hash map that maps class ids to labels
         """
         class_set = wandb.Classes([{'id': id, 'name': name} for id, name in names.items()])
@@ -444,7 +440,7 @@ class WandbLogger():
         arguments:
         pred (list): list of scaled predictions in the format - [xmin, ymin, xmax, ymax, confidence, class]
         predn (list): list of predictions in the native space - [xmin, ymin, xmax, ymax, confidence, class]
-        path (str): local path of the current evaluation image 
+        path (str): local path of the current evaluation image
         """
         if self.val_table and self.result_table:  # Log Table if Val dataset is uploaded as artifact
             self.log_training_progress(predn, path, names)

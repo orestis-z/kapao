@@ -1,14 +1,10 @@
-import sys
 from pathlib import Path
 
 import wandb
 
-FILE = Path(__file__).absolute()
-sys.path.append(FILE.parents[3].as_posix())  # add utils/ to path
-
-from train import train, parse_opt
-from utils.general import increment_path
-from utils.torch_utils import select_device
+from kapao.train import train, parse_opt
+from kapao.utils.general import increment_path
+from kapao.utils.torch_utils import select_device
 
 
 def sweep():

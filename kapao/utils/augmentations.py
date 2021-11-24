@@ -10,8 +10,8 @@ import random
 import cv2
 import numpy as np
 
-from utils.general import colorstr, segment2box, resample_segments, check_version
-from utils.metrics import bbox_ioa
+from kapao.utils.general import colorstr, segment2box, resample_segments, check_version
+from kapao.utils.metrics import bbox_ioa
 
 
 class Albumentations:
