@@ -12,7 +12,6 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import seaborn as sn
 import torch
 from PIL import Image, ImageDraw, ImageFont
 
@@ -284,6 +283,8 @@ def plot_study_txt(path='', x=None):  # from utils.plots import *; plot_study_tx
 
 
 def plot_labels(labels, names=(), save_dir=Path('')):
+    import seaborn as sn
+
     # plot dataset labels
     print('Plotting labels... ')
     c, b = labels[:, 0], labels[:, 1:].transpose()  # classes, boxes
